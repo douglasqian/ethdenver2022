@@ -34,5 +34,21 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "index.js",
+  "devDependencies": {
+    "hardhat": "^2.8.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/douglasqian/ethdenver2022.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/douglasqian/ethdenver2022/issues"
+  },
+  "homepage": "https://github.com/douglasqian/ethdenver2022#readme"
 }
