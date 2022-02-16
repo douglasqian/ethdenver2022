@@ -2,9 +2,11 @@
 
 ## Getting started
 
-Run `npm install` to install node modules and dependencies
-Run `npm start` to initialize web app locally
-Smart contract addresses should be deployed and tracked in .env files
+1. Run `npm install` to install node modules and dependencies.
+
+2. Run `npm start` to initialize web app locally
+
+* Smart contract addresses should be deployed and tracked in .env files
 
 ## Useful NPM commands
 
