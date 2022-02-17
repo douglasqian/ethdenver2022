@@ -23,8 +23,8 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
   networks: {
     polygon: {
       // Taken from .env, not uploaded to Github
-      url: process.env.YOUR_ALCHEMY_URL,
-      accounts: [process.env.YOUR_PRIVATE_POLYGON_ACCOUNT_KEY],
+      url: process.env.ALCHEMY_POLYGON_MUMBAI_URL,
+      accounts: [process.env.PRIVATE_ACCOUNT_KEY],
     },
   },
 };
