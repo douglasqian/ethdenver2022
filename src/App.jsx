@@ -7,12 +7,13 @@ import ERC721_ABI from "./abi/erc721.json";
 import ERC1155_ABI from "./abi/erc1155.json";
 import RULES_ABI from "./abi/rules.json";
 
+export const rulesContractAddr = "0x34f67dA4c6389a2Cfe1916Be516efF8AFf5cFb14";
+
 const App = () => {
 
   const { ethereum } = window;
   // token contract addr: 0xC5922438b8873000C11ba9866c87deFFeD15623A
   // const rulesContractAddr = "0xc1E7ABB6Cc2C6182e7c947Cdbd251e7f1A18f12a";
-  const rulesContractAddr = "0x34f67dA4c6389a2Cfe1916Be516efF8AFf5cFb14";
 
   const [currentAccount, setCurrentAccount] = useState("");
   const [tokenContractAddr, setTokenContractAddr] = useState("");

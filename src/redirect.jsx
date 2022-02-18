@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import {connectWallet} from "./WalletUtils";
+import { ethers } from "ethers";
+import {rulesContractAddr} from "./App";
 import "./App.css";
+import RULES_ABI from "./abi/rules.json";
 
 const NOT_VALIDATED = 0;
 const VALID = 1;
@@ -12,43 +15,38 @@ const Redirect = () => {
     const { ethereum } = window;
     const [status, setStatus] = useState(NOT_VALIDATED);
 
-    const validate = async() => {
-        // Make sure wallet is connected
-        // Initialize lock contract ethereum object
-        // Call "isValid" function
+    const setValid = async() => {
         setStatus(VALID);
-        console.log("A");
-        return
     }
 
     const handleRedirect = async() => {
-        // window.location.assign('https://google.com');
 
-        await validate();
+        // Connect wallet if haven't already
+        await connectWallet(ethereum);
 
-        console.log("B");
+        // Initialize lock contract ethereum object
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        const rulesContract = new ethers.Contract(rulesContractAddr, RULES_ABI.abi, signer);
 
-        console.log("status: ", status);
-        switch(status) {
-            case NOT_VALIDATED:
-                alert("UNEXPECTED: status should have resolved!");
-                break;
+        // Call "isValid" function, smart contract will verify wallet
+        // address against stored rules on lock
+        const isValid = await rulesContract.isValid("0x34f67dA4c6389a2Cfe1916Be516efF8AFf5cFb14", 1);
+        console.log("res: ", isValid);
 
-            case VALID:
-                // return (<Redirect to="https://google.com" />);
-                break;
+        if (isValid) {
+            // Redirect to URL
+            window.location.assign('https://google.com');
         }
-
     }
 
     useEffect(() => {
-        // handleRedirect();
-        connectWallet(ethereum);
+        handleRedirect();
     })
 
     return (
         <div>
-            <button className="waveButton" onClick={() => handleRedirect()}>
+            <button className="waveButton" onClick={() => setValid()}>
             Push to validate!
             </button>
 
