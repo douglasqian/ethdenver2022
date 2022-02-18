@@ -14,10 +14,6 @@ const Redirect = () => {
     const { ethereum } = window;
     const [status, setStatus] = useState(NOT_VALIDATED);
 
-    const setValid = async() => {
-        setStatus(VALID);
-    }
-
     const handleRedirect = async() => {
 
         // Connect wallet if haven't already
@@ -57,9 +53,6 @@ const Redirect = () => {
 
     return (
         <div>
-            {/* <button className="waveButton" onClick={() => setValid()}>
-            Push to validate!
-            </button> */}
 
             {status == NOT_VALIDATED && (<main style={{ padding: '1rem 0' }}>
             <h2 className="header">Checking if you have the NFT...</h2>
