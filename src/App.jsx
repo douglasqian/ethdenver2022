@@ -27,41 +27,10 @@ const App = () => {
   const [currentURL, setCurrentURL] = useState("https://i.kym-cdn.com/photos/images/original/002/127/143/594.jpg");
   const [redirectURL, setRedirectURL] = useState("");
 
-  const checkNFT = async () => {
-    /*
-      This function checks if the currently connected wallet account holds
-      the token contract address stored in this React component.
-    */
-
-    const provider = new ethers.providers.Web3Provider(ethereum);
-    const signer = provider.getSigner();
-
-    // Only support ERC-721 for now. Extend this to ERC-20 and ERC-1155 later.
-    const tokenContract = new ethers.Contract(tokenContractAddr, ERC721_ABI, signer);
-
-    try {
-      console.log("Checking for tokens on ", tokenContractAddr);
-      const balance = await tokenContract.balanceOf(currentAccount);
-
-      alert("You have " + balance.toNumber() + " tokens!")
-
-    } catch (error) {
-      console.log(error);
-      alert("No tokens found! Make sure this is a valid ERC-721 token contract address");
-    }
-  }
-
-  const readLockCounter = async (rulesContract) => {
-    const lockID = await rulesContract.getLockCounter();
-    console.log("getLockCounter txn: ", lockID);
-    console.log("Lock ID: ", lockID.toNumber());
-    return lockID.toNumber();
-  }
-
   const createLock = async () => {
     /*
-      This function adds a new rule (token contract address, token count) to
-      that is indexed by a hash to the smart contract's data structure.
+      This function creats a new lock (redirect URL + set of rules)
+      and stores that in the smart contract on the backend.
     */
 
     const provider = new ethers.providers.Web3Provider(ethereum);
@@ -90,20 +59,32 @@ const App = () => {
     }
   }
 
+  const readLockCounter = async (rulesContract) => {
+    /* 
+      Reads the current global lock counter from the smart contract.
+    */
+    const lockID = await rulesContract.getLockCounter();
+    console.log("getLockCounter txn: ", lockID);
+    console.log("Lock ID: ", lockID.toNumber());
+    return lockID.toNumber();
+  }
+
+
   const connectWalletWrapper = async () => {
+    /* 
+      Wrapper for connecting the wallet and setting the current wallet address.
+    */
     await checkIfWalletConnected(ethereum);
     const account = await getConnectedAccount(ethereum);
     setCurrentAccount(account);
   }
 
-  /*
-  * This runs our function when the page loads.
-  */
   useEffect(() => {
+    /* 
+      This runs our function when the page loads.
+    */
     connectWalletWrapper();
-    console.log("gating rules contract addr: ", process.env.REACT_APP_GATING_RULES_CONTRACT_ADDRESS);
-    // setRulesContractAddr(process.env.REACT_APP_GATING_RULES_CONTRACT_ADDRESS);
-    // console.log("gating rules contract addr 2: ", rulesContractAddr);
+
   }, [])
 
   return (
@@ -119,12 +100,6 @@ const App = () => {
             Wallet not connected!
           </div>
         )}
-
-        {/* {currentAccount && (
-          <div className="bio">
-            Connected Wallet: {currentAccount}
-          </div>
-        )} */}
 
         {currentAccount && (<div className="bio">
           Enter an NFT (ERC-721) contract address:
@@ -157,31 +132,6 @@ const App = () => {
           <br></br>
           Share it with some friends!
         </div>)}
-
-        <br></br>
-        <br></br>
-        <br></br>
-
-        <button onClick={() => setTestMode(!testMode)}>
-          Toggle test mode
-        </button>
-
-        {testMode && (<h2 className="header"> For testing purposes only: </h2>)}
-
-        {testMode && (<button className="waveButton" onClick={() => checkNFT()}>
-          Check if I have have enough of this NFT!
-        </button>)}
-
-        {/* {currentAccount && (<div className="bio">
-          Give me a hash:
-        </div>)}
-
-        <input onChange={(event) => setCurrentHash(event.target.value)} type="text"/>
-
-        {(<button className="waveButton" onClick={() => getRule(currentHash)}>
-          Get the gating rule!
-        </button>)} */}
-
 
       </div>
     </div>
