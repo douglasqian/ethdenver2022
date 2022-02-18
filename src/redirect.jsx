@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import {connectWallet} from "./WalletUtils";
 import "./App.css";
 
 const NOT_VALIDATED = 0;
@@ -8,6 +9,7 @@ const INVALID = 2;
 const Redirect = () => {
     console.log(window.location.pathname);
 
+    const { ethereum } = window;
     const [status, setStatus] = useState(NOT_VALIDATED);
 
     const validate = async() => {
@@ -41,6 +43,7 @@ const Redirect = () => {
 
     useEffect(() => {
         // handleRedirect();
+        connectWallet(ethereum);
     })
 
     return (

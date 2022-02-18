@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import {connectWallet} from "./WalletUtils";
 import { ethers } from "ethers";
 import "./App.css";
 import ERC20_ABI from "./abi/erc20.json";
@@ -21,25 +22,6 @@ const App = () => {
 
   // const [currentURL, setCurrentURL] = useState("");
   // const [rulesContractAddr, setRulesContractAddr] = useState("");
-
-  const connectWallet = async () => {
-
-    // Make sure wallet is connected
-    if (!ethereum) {
-      alert("MetaMask wallet not connected yet! Please press the connect wallet button!");
-    } else {
-      console.log("We have the ethereum object", ethereum);
-    }
-
-    // Get the connected wallet's address and store it
-    const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-    if (accounts.length === 0) {
-      alert("No authorized accounts found!")
-    } else {
-      console.log("Found %d accounts, connecting to ", accounts.length, accounts[0])
-      setCurrentAccount(accounts[0]);
-    }
-  }
 
 
   const checkNFT = async () => {
@@ -116,11 +98,16 @@ const App = () => {
     }
   }
 
+  const connectWalletWrapper = async () => {
+    const account = await connectWallet(ethereum);
+    setCurrentAccount(account);
+  }
+
   /*
   * This runs our function when the page loads.
   */
   useEffect(() => {
-    connectWallet();
+    connectWalletWrapper();
     console.log("gating rules contract addr: ", process.env.REACT_APP_GATING_RULES_CONTRACT_ADDRESS);
     // setRulesContractAddr(process.env.REACT_APP_GATING_RULES_CONTRACT_ADDRESS);
     // console.log("gating rules contract addr 2: ", rulesContractAddr);
