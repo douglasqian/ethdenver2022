@@ -41,10 +41,14 @@ const Redirect = () => {
         console.log("is valid: ", res[0]);
         console.log("redirect URL: ", res[1]);
 
-        // if (isValid) {
-            // Redirect to URL
-            // window.location.assign('https://google.com');
-        // }
+        const isValid = res[0];
+        const redirectURL = res[1];
+
+        if (isValid) {
+            window.location.assign(redirectURL);
+        } else {
+            setStatus(INVALID);
+        }
     }
 
     useEffect(() => {
@@ -53,20 +57,18 @@ const Redirect = () => {
 
     return (
         <div>
-            <button className="waveButton" onClick={() => setValid()}>
+            {/* <button className="waveButton" onClick={() => setValid()}>
             Push to validate!
-            </button>
+            </button> */}
 
             {status == NOT_VALIDATED && (<main style={{ padding: '1rem 0' }}>
-            <h2 className="header">Validating...</h2>
-            </main>)}
-
-            {status == VALID && (<main style={{ padding: '1rem 0' }}>
-            <h2 className="header">You're good!</h2>
+            <h2 className="header">Checking if you have the NFT...</h2>
             </main>)}
 
             {status == INVALID && (<main style={{ padding: '1rem 0' }}>
-            <h2 className="header">Oops, looks like you don't have permissions</h2>
+            <h2 className="header">Oops, looks like you don't have the NFT! </h2>
+            <br></br>
+            <h1 className="header">🤷‍♂️</h1>
             </main>)}
         </div>
     );

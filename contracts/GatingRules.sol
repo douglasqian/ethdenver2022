@@ -68,7 +68,7 @@ contract GatingRules {
     }
 
     // check if user passes rule (has at least one NFT from rule's contract address)
-    function checkRuleErc721(RuleERC721 memory _rule, address user) public payable returns (bool) {
+    function checkRuleErc721(RuleERC721 memory _rule, address user) public view returns (bool) {
         address token_contract_address = _rule.token_contract_address;
         uint balance = getErc721Balance(token_contract_address, user);
         bool res = balance > 0;
@@ -76,7 +76,7 @@ contract GatingRules {
         // Can't see events on polygonscan???
         // TODO understand this?
         // https://mumbai.polygonscan.com/address/0x6D32dFA341d1eC8A0b72C62313509a12F847dcC5#events
-        emit ruleCheckResult(user, token_contract_address, res);
+        // emit ruleCheckResult(user, token_contract_address, res);
         return res;
     }
 
@@ -85,7 +85,7 @@ contract GatingRules {
     }
 
     // iterate through each rule for lock and check if user passes it
-    function isValid(address user, uint lockID) public payable returns (bool, string memory) {
+    function isValid(address user, uint lockID) public view returns (bool, string memory) {
         require(user != address(0), "User must not be null address!");
         require(lockID > 0);
         require(lockID < lockIdCounter, "Lock with this ID not created yet!");

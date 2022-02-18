@@ -9,10 +9,11 @@ import RULES_ABI from "./abi/rules.json";
 
 const baseURL = "localhost:3000"
 // const tokenContractAddr = "0xC5922438b8873000C11ba9866c87deFFeD15623A";
-// const otherTokenContractAddr = "0xf44bb00d6bB3776df40831369c05b7368A9c916a";
-// const otherPersonAddr = "0x3cd8a9F4CE4043623b4a71ec7aBDEe77b7F3cFc0";
-// export const rulesContractAddr = "0x2069669cCA7bd7875927D0b3EE8d665D193d5ECe";
-export const rulesContractAddr = "0x6D32dFA341d1eC8A0b72C62313509a12F847dcC5";
+
+// const otherTokenContractAddr = "0xf44bb00d6bB3776df40831369c05b7368A9c916a"; // Doug wallet doesn't have NFT here
+// const otherPersonAddr = "0x3cd8a9F4CE4043623b4a71ec7aBDEe77b7F3cFc0"; // this wallet does... I think it's Jakes?
+
+export const rulesContractAddr = "0x07bfd71b4916E0a63B8Ba721C9B2C9520A94b8bF";
 
 const App = () => {
 
@@ -63,8 +64,6 @@ const App = () => {
       that is indexed by a hash to the smart contract's data structure.
     */
 
-    console.log("tokenContractAddr: ", tokenContractAddr);
-
     const provider = new ethers.providers.Web3Provider(ethereum);
     const signer = provider.getSigner();
     const rulesContract = new ethers.Contract(rulesContractAddr, RULES_ABI.abi, signer);
@@ -86,27 +85,6 @@ const App = () => {
       console.log("redirect URL: ", redirectURL);
       setRedirectURL(redirectURL);
 
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  const getRule = async (_hash) => {
-    /*
-      @dev TEST FUNCTION
-      This function retrieves a rule from the smart contract given a hash in
-      the redirect URL.
-    */
-    const hash = ethers.utils.hexZeroPad("0x133", 32);
-    const provider = new ethers.providers.Web3Provider(ethereum);
-    const signer = provider.getSigner();
-    const rulesContract = new ethers.Contract(rulesContractAddr, RULES_ABI.abi, signer);
-
-    try {
-      const rule = await rulesContract.fetchRule(hash);
-      console.log("Rule: ", rule);
-      console.log("Token contract: ", rule['token_contract_address']);
-      console.log("Token count: ", rule['token_count'].toNumber());
     } catch (error) {
       console.log(error);
     }
@@ -154,12 +132,6 @@ const App = () => {
 
         <input onChange={(event) => setTokenContractAddr(event.target.value)} type="text"/>
 
-        {/* {currentAccount && (<div className="bio">
-          Enter the number of NFTs required:
-        </div>)}
-
-        <input onChange={(event) => setTokenCount(event.target.value)} type="number" /> */}
-
         {currentAccount && (<div className="bio">
           Enter URL to gate:
         </div>)}
@@ -173,7 +145,7 @@ const App = () => {
 
         {txnMining && (<div className="bio">
           <br></br>
-        ⛏ Transaction mining...
+        ⛏ Working on it...
         </div>)}
 
         {redirectURL && (<div className="bio">
