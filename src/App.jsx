@@ -12,7 +12,8 @@ const App = () => {
 
   const { ethereum } = window;
   // token contract addr: 0xC5922438b8873000C11ba9866c87deFFeD15623A
-  const rulesContractAddr = "0xc1E7ABB6Cc2C6182e7c947Cdbd251e7f1A18f12a";
+  // const rulesContractAddr = "0xc1E7ABB6Cc2C6182e7c947Cdbd251e7f1A18f12a";
+  const rulesContractAddr = "0x34f67dA4c6389a2Cfe1916Be516efF8AFf5cFb14";
 
   const [currentAccount, setCurrentAccount] = useState("");
   const [tokenContractAddr, setTokenContractAddr] = useState("");
@@ -87,7 +88,7 @@ const App = () => {
     const rulesContract = new ethers.Contract(rulesContractAddr, RULES_ABI.abi, signer);
 
     try {
-      const addTxn = await rulesContract.addRule(hash, tokenContractAddr, tokenCount);
+      const addTxn = await rulesContract.createLock(hash, tokenContractAddr, tokenCount);
       console.log("Txn mining...");
       await addTxn.wait();
       console.log("Txn mined!");
