@@ -7,7 +7,7 @@ import ERC721_ABI from "./abi/erc721.json";
 import ERC1155_ABI from "./abi/erc1155.json";
 import RULES_ABI from "./abi/rules.json";
 
-export const rulesContractAddr = "0x75AdF4Dc43c399b9d867805D6688D4AbA83447a7";
+export const rulesContractAddr = "0x4B38C5fb37DDD171207e0475EFE2796989EdC9a8";
 
 const App = () => {
 
