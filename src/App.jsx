@@ -92,7 +92,15 @@ const App = () => {
       <div className="dataContainer">
 
         {currentAccount && (<div className="header">
-        👋 Let's create a URL!
+        👋 Let's create a token-gated URL!
+        </div>)}
+
+        {currentAccount && (<div className="header2">
+        A token-gated URL means that only certain wallets can access the destination URL.
+        <br></br>
+        Each rule defines an NFT to check for on the wallet.
+        <br></br>
+        We check to see if the connected wallet satisfies all the rules before redirecting to the destination URL.
         </div>)}
 
         {!currentAccount && (
@@ -102,20 +110,21 @@ const App = () => {
         )}
 
         {currentAccount && (<div className="bio">
-          Enter an NFT (ERC-721) contract address:
-        </div>)}
-
-        <input onChange={(event) => setTokenContractAddr(event.target.value)} type="text"/>
-
-        {currentAccount && (<div className="bio">
-          Enter URL to gate:
+          Destination URL:
         </div>)}
 
         <input onChange={(event) => setCurrentURL(event.target.value)} type="text" />
         
 
+
+        {currentAccount && (<div className="bio">
+          Enter an NFT (ERC-721) contract address:
+        </div>)}
+
+        <input onChange={(event) => setTokenContractAddr(event.target.value)} type="text"/>
+
         {(<button className="waveButton" onClick={() => createLock()}>
-          Create a new lock with rules!
+          Create a new URL
         </button>)}
 
         {txnMining && (<div className="bio">
