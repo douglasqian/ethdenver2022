@@ -20,10 +20,12 @@ contract GatingRules {
         return rules[_hash];
     }
 
-    function createLock(bytes32 _hash, address addr, uint count) public {
-        
-        rules[_hash].token_contract_address = addr;
-        rules[_hash].token_count = count;
+    function createLock(string calldata dest_url, Rule[] calldata new_rules) public {
+        // Implement me.
+        require(bytes(dest_url).length >= 0);
+        require(new_rules.length >= 0);
+        // rules[_hash].token_contract_address = addr;
+        // rules[_hash].token_count = count;
     }
 
     function isValid(address user, uint lockID) public pure returns (bool) {
