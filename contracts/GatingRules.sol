@@ -37,7 +37,7 @@ contract GatingRules {
         console.log("Yo im turnt up");
     }
 
-    function createLock(string memory dest_url, RuleERC721[] memory new_rules) public returns (uint) {
+    function createLock(string memory dest_url, RuleERC721[] memory new_rules) public payable returns (uint) {
         console.log("Creating lock");
         require(bytes(dest_url).length >= 0);
         require(new_rules.length >= 0);
@@ -51,6 +51,12 @@ contract GatingRules {
         lockIds.push(newLockId);
         console.log("created new lock with id: ");
         lockIdCounter += 1;
+
+        // This doesn't actually return for some reason when you wait
+        // for the smart contract to return...
+        // TODO understand this?
+        // Improvement for frontend code would be to use this lockID directly
+        // since there could be small race conditions.
         return newLockId;
     }
 
@@ -62,10 +68,16 @@ contract GatingRules {
     }
 
     // check if user passes rule (has at least one NFT from rule's contract address)
-    function checkRuleErc721(RuleERC721 memory _rule, address user) public view returns (bool) {
+    function checkRuleErc721(RuleERC721 memory _rule, address user) public payable returns (bool) {
         address token_contract_address = _rule.token_contract_address;
         uint balance = getErc721Balance(token_contract_address, user);
-        return balance > 0;
+        bool res = balance > 0;
+
+        // Can't see events on polygonscan???
+        // TODO understand this?
+        // https://mumbai.polygonscan.com/address/0x6D32dFA341d1eC8A0b72C62313509a12F847dcC5#events
+        emit ruleCheckResult(user, token_contract_address, res);
+        return res;
     }
 
     function _fetchURL(uint lockId) private view returns (string memory) {
@@ -73,9 +85,11 @@ contract GatingRules {
     }
 
     // iterate through each rule for lock and check if user passes it
-    function isValid(address user, uint lockID) public view returns (bool, string memory) {
-        require(user != address(0));
-        require(lockID != 0);
+    function isValid(address user, uint lockID) public payable returns (bool, string memory) {
+        require(user != address(0), "User must not be null address!");
+        require(lockID > 0);
+        require(lockID < lockIdCounter, "Lock with this ID not created yet!");
+
         RuleERC721[] memory rules = lockToRules[lockID];
         for (uint i = 0; i < rules.length; i++) {
             RuleERC721 memory rule = rules[i];
@@ -94,6 +108,13 @@ contract GatingRules {
     //
     // below are helper functions for debugging & run.js script
     //
+
+    event ruleCheckResult(
+        address user,
+        address token_contract_address,
+        bool result
+    );
+
 
     // fetch ids across all locks
     function fetchAllLockIds() public view returns (uint[] memory) {

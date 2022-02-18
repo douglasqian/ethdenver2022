@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {connectWallet} from "./WalletUtils";
+import {checkIfWalletConnected, getConnectedAccount} from "./WalletUtils";
 import { ethers } from "ethers";
 import "./App.css";
 import ERC20_ABI from "./abi/erc20.json";
@@ -8,8 +8,11 @@ import ERC1155_ABI from "./abi/erc1155.json";
 import RULES_ABI from "./abi/rules.json";
 
 const baseURL = "localhost:3000"
-// const tokenContractAddr = "0xC5922438b8873000C11ba9866c87deFFeD15623A"
-export const rulesContractAddr = "0x2069669cCA7bd7875927D0b3EE8d665D193d5ECe";
+// const tokenContractAddr = "0xC5922438b8873000C11ba9866c87deFFeD15623A";
+// const otherTokenContractAddr = "0xf44bb00d6bB3776df40831369c05b7368A9c916a";
+// const otherPersonAddr = "0x3cd8a9F4CE4043623b4a71ec7aBDEe77b7F3cFc0";
+// export const rulesContractAddr = "0x2069669cCA7bd7875927D0b3EE8d665D193d5ECe";
+export const rulesContractAddr = "0x6D32dFA341d1eC8A0b72C62313509a12F847dcC5";
 
 const App = () => {
 
@@ -20,7 +23,6 @@ const App = () => {
 
   const [currentAccount, setCurrentAccount] = useState("");
   const [tokenContractAddr, setTokenContractAddr] = useState("0xC5922438b8873000C11ba9866c87deFFeD15623A");
-  const [tokenCount, setTokenCount] = useState(1);
   const [currentURL, setCurrentURL] = useState("https://i.kym-cdn.com/photos/images/original/002/127/143/594.jpg");
   const [redirectURL, setRedirectURL] = useState("");
 
@@ -39,13 +41,8 @@ const App = () => {
     try {
       console.log("Checking for tokens on ", tokenContractAddr);
       const balance = await tokenContract.balanceOf(currentAccount);
-      const numTokens = balance.toNumber();
 
-      if (numTokens < tokenCount) {
-        alert("Not enough tokens, you only have " + numTokens);
-      } else {
-        alert("Woohoo! You're all good!");
-      }
+      alert("You have " + balance.toNumber() + " tokens!")
 
     } catch (error) {
       console.log(error);
@@ -55,6 +52,7 @@ const App = () => {
 
   const readLockCounter = async (rulesContract) => {
     const lockID = await rulesContract.getLockCounter();
+    console.log("getLockCounter txn: ", lockID);
     console.log("Lock ID: ", lockID.toNumber());
     return lockID.toNumber();
   }
@@ -80,8 +78,10 @@ const App = () => {
       setTxnMining(false);
 
       console.log("Txn mined!");
+      console.log("createLock txn: ", txn);
 
-      const lockID = await readLockCounter(rulesContract);
+      var lockID = await readLockCounter(rulesContract);
+      lockID = lockID-1;
       const redirectURL = baseURL + "/" + lockID;
       console.log("redirect URL: ", redirectURL);
       setRedirectURL(redirectURL);
@@ -113,7 +113,8 @@ const App = () => {
   }
 
   const connectWalletWrapper = async () => {
-    const account = await connectWallet(ethereum);
+    await checkIfWalletConnected(ethereum);
+    const account = await getConnectedAccount(ethereum);
     setCurrentAccount(account);
   }
 
@@ -131,21 +132,21 @@ const App = () => {
     <div className="mainContainer">
       <div className="dataContainer">
 
-        <div className="header">
+        {currentAccount && (<div className="header">
         👋 Let's create a URL!
-        </div>
+        </div>)}
 
         {!currentAccount && (
-          <div className="bio">
+          <div className="header">
             Wallet not connected!
           </div>
         )}
 
-        {currentAccount && (
+        {/* {currentAccount && (
           <div className="bio">
             Connected Wallet: {currentAccount}
           </div>
-        )}
+        )} */}
 
         {currentAccount && (<div className="bio">
           Enter an NFT (ERC-721) contract address:
