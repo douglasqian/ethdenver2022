@@ -115,4 +115,9 @@ contract GatingRules {
         }
         return finalRuleAddresses;
     }
+
+    // returns current lock ID counter
+    function getLockCounter() public view returns (uint) {
+        return lockIdCounter;
+    } 
 }
