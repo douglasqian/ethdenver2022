@@ -5,8 +5,6 @@ import ERC20_ABI from "./abi/erc20.json";
 import ERC721_ABI from "./abi/erc721.json";
 import ERC1155_ABI from "./abi/erc1155.json";
 import RULES_ABI from "./abi/rules.json";
-// import { createHash } from "crypto";
-
 
 const App = () => {
 

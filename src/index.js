@@ -1,16 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import Redirect from './redirect';
 
-console.log("index")
-
+const rootElement = document.getElementById('root');
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <Routes>
+        {/* Homepage URL path */}
+        <Route exact path="/" element={<App />}/>
+        {/* Redirect URL path */}
+        <Route exact path="/*" element={<Redirect />}/>
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>,
-  document.getElementById('root')
+  rootElement,
 );
 
 // If you want to start measuring performance in your app, pass a function
