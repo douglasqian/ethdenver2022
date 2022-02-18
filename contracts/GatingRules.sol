@@ -95,6 +95,7 @@ contract GatingRules {
     // below are helper functions for debugging & run.js script
     //
 
+    // fetch ids across all locks
     function fetchAllLockIds() public view returns (uint[] memory) {
         console.log("Fetching all lock ids");
         return lockIds;

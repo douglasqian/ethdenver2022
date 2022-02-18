@@ -45,27 +45,27 @@ const main = async () => {
     // check # of NFTs Kishan has for each contract
     let nftBalance;
 	  nftBalance = await gatingRulesContract.getErc721Balance(KPmumbaiNFTContract, user);
-    console.log("KPmumbaiNFTContract: ", nftBalance);
+    console.log("KPmumbaiNFTContract: ", nftBalance); // 3
     nftBalance = await gatingRulesContract.getErc721Balance(mumbai4dayzNFTContract, user);
-    console.log("mumbai4dayzNFTContract: ", nftBalance);
+    console.log("mumbai4dayzNFTContract: ", nftBalance); // 1
     nftBalance = await gatingRulesContract.getErc721Balance(emptyCollectionNFTContract, user);
-    console.log("emptyCollectionNFTContract: ", nftBalance);
+    console.log("emptyCollectionNFTContract: ", nftBalance); // 0
 
     // see the results for whether user passes each rule
     let isSuccessful;
     isSuccessful = await gatingRulesContract.checkRuleErc721(rule1, user);
-    console.log("isSuccessful:", isSuccessful);
+    console.log("isSuccessful:", isSuccessful); // should pass
     isSuccessful = await gatingRulesContract.checkRuleErc721(rule2, user);
-    console.log("isSuccessful:", isSuccessful);
+    console.log("isSuccessful:", isSuccessful); // should pass
     isSuccessful = await gatingRulesContract.checkRuleErc721(rule3, user);
-    console.log("isSuccessful:", isSuccessful);
+    console.log("isSuccessful:", isSuccessful); // should fail
   
     // with lock, check if user passes all rules
     // should not pass when rule 3 is included and should pass w/o rule 3
     const firstLockId = lockIds[0];
     console.log("firstLockId:", firstLockId);
     isValid = await gatingRulesContract.isValid(user, firstLockId);
-    console.log("isValid:", isValid);
+    console.log("isValid:", isValid); // false, since rule 3 will fail
     
   };
 
