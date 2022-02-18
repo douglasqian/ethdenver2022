@@ -15,9 +15,6 @@ const main = async () => {
     // console.log("zzzzz:", zzzzz);
     console.log("testttt");
 
-    await gatingRulesContract.fff();
-    await gatingRulesContract.fff();
-
     // need to sleep to allow enough time for lock creation methods to run
     console.log("sleeping now..."); 
     await sleep(5000).then(() => {});
@@ -30,6 +27,11 @@ const main = async () => {
 
     allRules = await gatingRulesContract.fetchAllRules();
     console.log("allRules:", allRules);
+
+    const firstLockId = lockIds[0];
+    const user = "0x1111111111111111111111111111111111111111";
+    isValid = await gatingRulesContract.isValid(user, firstLockId);
+    console.log("isValid:", isValid);
   };
 
   function sleep(ms) {

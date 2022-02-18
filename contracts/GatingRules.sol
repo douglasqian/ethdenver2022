@@ -38,7 +38,7 @@ contract GatingRules {
         return newLockId;
     }
 
-    function checkRuleERC721(RuleERC721 memory _rule, address user) public returns (bool) {
+    function checkRuleERC721(RuleERC721 memory _rule, address user) public view returns (bool) {
         // TODO: check if user has token
         // return _rule.token_contract_address.balanceOf(user) > 0;
         return true;
@@ -49,7 +49,7 @@ contract GatingRules {
     }
 
     // ensure user passes all gating rules for given lock
-    function isValid(address user, uint lockID) public returns (bool, string memory) {
+    function isValid(address user, uint lockID) public view returns (bool, string memory) {
         require(user != address(0));
         require(lockID != 0);
         RuleERC721[] memory rules = lockToRules[lockID];
