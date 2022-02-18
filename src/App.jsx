@@ -78,11 +78,11 @@ const App = () => {
       This function adds a new rule (token contract address, token count) to
       that is indexed by a hash to the smart contract's data structure.
     */
-    const hash = ethers.utils.hexZeroPad("0x124", 32);
+    const hash = ethers.utils.hexZeroPad("0x133", 32);
     // const crypto = require('crypto');
     // payload = (tokenContractAddr, tokenCount);
     // const hash = crypto.createHash('sha1').update(payload);
-    // console.log("hash: ", hash);
+    console.log("hash: ", hash);
     const provider = new ethers.providers.Web3Provider(ethereum);
     const signer = provider.getSigner();
     const rulesContract = new ethers.Contract(rulesContractAddr, RULES_ABI.abi, signer);
@@ -103,7 +103,7 @@ const App = () => {
       This function retrieves a rule from the smart contract given a hash in
       the redirect URL.
     */
-    const hash = ethers.utils.hexZeroPad("0x124", 32);
+    const hash = ethers.utils.hexZeroPad("0x133", 32);
     const provider = new ethers.providers.Web3Provider(ethereum);
     const signer = provider.getSigner();
     const rulesContract = new ethers.Contract(rulesContractAddr, RULES_ABI.abi, signer);
