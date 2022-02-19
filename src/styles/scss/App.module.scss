@@ -1,0 +1,105 @@
+.mainContainer {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 30px;
+    font-family: 'Raleway';
+
+    .dataContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        max-width: 750;
+        
+        .header {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 600;
+        }
+        
+        .header2 {
+            font-weight: 400 !important;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 250;
+            margin-bottom: 10px;
+        }
+        
+        .bio {
+            text-align: center;
+            color: black;
+            margin-top: 16px;
+        }
+        
+        .waveInput {
+            cursor: pointer;
+            margin-top: 16px;
+            padding: 8px;
+            border: 0;
+            border-radius: 5px;
+            
+        }
+        
+        .waveButton {
+            cursor: pointer;
+            margin-top: 16px;
+            padding: 8px;
+            border: 0;
+            border-radius: 5px;
+            font-size:18px;
+        }
+
+        button{
+            border-radius: 6px;
+            background-color: #A84658;
+            font-family: 'Raleway';
+            width: 620px;
+            margin-right: auto;
+            margin-left: auto;
+            color: #88EAFF;
+        }
+        
+        input{
+            margin-right: auto;
+            margin-left: auto;
+            width: 600px;
+            font-family: 'Raleway';
+            background-color: #A4739C;
+            border: none;
+            outline: none;
+            padding: 10px;
+            transition: all .2s ease-in-out;
+
+
+            &:focus{
+                border: #A84658 2px solid;
+                background-color: rgba(0,0,0,0);
+            }
+
+            &::placeholder{
+                color: #88EAFF;
+            }
+        }
+    }
+
+}
+
+.rules{
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 10px;
+
+    button{
+        margin-left: 5px !important;
+        width: 20px !important;
+        height: 20px !important;
+        border-radius: 6px !important;
+        border: none !important;
+        background-color: #A84658;
+        font-family: 'Raleway';
+        margin-right: auto;
+        margin-left: auto;
+        color: #88EAFF;
+    }
+}

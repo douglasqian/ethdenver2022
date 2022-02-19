@@ -1,16 +1,17 @@
 import React, { useEffect, useState, useContext } from "react";
-import {checkIfWalletConnected, getConnectedAccount} from "./WalletUtils";
-import { ethers } from "ethers";
-import Rule from "./Rule";
 import { useSelector, useDispatch } from 'react-redux';
-import {add} from './ruleSlice';
-
-import "./App.css";
 import { v4 as uuid4 } from 'uuid';
+import { ethers } from "ethers";
+import {checkIfWalletConnected, getConnectedAccount} from "./WalletUtils";
+import RULES_ABI from "./abi/rules.json";
+import {add} from './ruleSlice';
+import Rule from "./Rule";
+import "./App.css";
+import styles from './styles/Master.module.scss'
+
 import ERC20_ABI from "./abi/erc20.json";
 import ERC721_ABI from "./abi/erc721.json";
 import ERC1155_ABI from "./abi/erc1155.json";
-import RULES_ABI from "./abi/rules.json";
 
 const baseURL = "localhost:3000"
 // const tokenContractAddr = "0xC5922438b8873000C11ba9866c87deFFeD15623A";
@@ -109,32 +110,31 @@ const App = () => {
   }, [])
 
   return (
-      <div className="mainContainer">
-        <div className="dataContainer">
+      <div className={styles.mainContainer}>
+        <div className={styles.dataContainer}>
 
-          {currentAccount && (<div className="header">
-          👋 Let's create a token-gated URL!
+          <img style={{width:'100px', marginRight:'auto', marginLeft:'auto'}} src="/gatr.svg" alt="" />
+          {currentAccount && (<div className={styles.header}>
+          <p>👋 Welcome to GATR <br /> Let's create a token-gated URL!</p>
           </div>)}
 
-          {currentAccount && (<div className="header2">
-          A token-gated URL means that only certain wallets can access the destination URL.
+          {currentAccount && (<div className={styles.header2}>
+            <p>A token-gated URL means that only certain wallets can access the destination URL.
           <br></br>
           Each rule defines an NFT to check for on the wallet.
           <br></br>
-          We check to see if the connected wallet satisfies all the rules before redirecting to the destination URL.
+          We check to see if the connected wallet satisfies all the rules before redirecting to the destination URL.</p>
           </div>)}
 
           {!currentAccount && (
-            <div className="header">
-              Wallet not connected!
-            </div>
+              <h1>Wallet not connected!</h1>
           )}
 
-          {currentAccount && (<div className="bio">
-            Destination URL:
+          {currentAccount && (<div className={styles.bio}>
+            <p>Destination URL:</p>
           </div>)}
 
-          <input onChange={(event) => setCurrentURL(event.target.value)} type="text" />
+          <input onChange={(event) => setCurrentURL(event.target.value)} type="text" placeholder="Destination here" />
           
           {rules.length !== 0 && (
             rules.map((rule) => (
@@ -146,31 +146,28 @@ const App = () => {
             ))
           )}
 
-          {currentAccount && (<div className="bio">
-            Enter an NFT (ERC-721) contract address:
+          {currentAccount && (<div className={styles.bio}>
+            <p>Enter an NFT (ERC-721) contract address:</p>
           </div>)}
 
-          <input value={inputERC721Addr} onChange={(event) => setInputERC721Addr(event.target.value)} type="text"/>
+          <input value={inputERC721Addr} onChange={(event) => setInputERC721Addr(event.target.value)} type="text" placeholder="Address here"/>
 
-          <button className="waveButton" onClick={() => addRuleInternal()}>Add rule</button>
+          <button className={styles.waveButton} onClick={() => addRuleInternal()}>Add rule</button>
 
-          {(<button className="waveButton" onClick={() => createLock()}>
+          {(<button className={styles.waveButton} onClick={() => createLock()}>
             Create a new URL
           </button>)}
 
-          {txnMining && (<div className="bio">
-            <br></br>
-          ⛏ Working on it...
+          {txnMining && (<div className={styles.bio}>
+          ⛏<p>Working on it...</p>
           </div>)}
 
-          {!txnMining && redirectURL && (<div className="bio">
-            Here's your URL 🎉
-            <br></br>
+          {!txnMining && redirectURL && (<div className={styles.bio}>
+            <p>Here's your URL 🎉
             <br></br>
             {redirectURL}
             <br></br>
-            <br></br>
-            Share it with some friends!
+            Share it with some friends!</p>
           </div>)}
 
         </div>
