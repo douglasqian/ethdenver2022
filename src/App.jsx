@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import {checkIfWalletConnected, getConnectedAccount} from "./WalletUtils";
 import { ethers } from "ethers";
+import Rule from "./Rule";
+
 import "./App.css";
+import { v4 as uuid4 } from 'uuid';
 import ERC20_ABI from "./abi/erc20.json";
 import ERC721_ABI from "./abi/erc721.json";
 import ERC1155_ABI from "./abi/erc1155.json";
@@ -23,9 +26,11 @@ const App = () => {
   const [testMode, setTestMode] = useState(false);
 
   const [currentAccount, setCurrentAccount] = useState("");
-  const [tokenContractAddr, setTokenContractAddr] = useState("0xC5922438b8873000C11ba9866c87deFFeD15623A");
+  const [inputERC721Addr, setInputERC721Addr] = useState("0xC5922438b8873000C11ba9866c87deFFeD15623A");
   const [currentURL, setCurrentURL] = useState("https://i.kym-cdn.com/photos/images/original/002/127/143/594.jpg");
   const [redirectURL, setRedirectURL] = useState("");
+
+  const [rules, setRules] = useState([]);
 
   const createLock = async () => {
     /*
@@ -38,7 +43,11 @@ const App = () => {
     const rulesContract = new ethers.Contract(rulesContractAddr, RULES_ABI.abi, signer);
 
     try {
-      const txn = await rulesContract.createLock(currentURL, [{token_contract_address: tokenContractAddr}]);
+
+      const inputRules = rules.map(rule =>
+        ({token_contract_address: rule.tokenContractAddr}))
+
+      const txn = await rulesContract.createLock(currentURL, inputRules);
       console.log("Txn mining...");
       
       setTxnMining(true);
@@ -57,6 +66,17 @@ const App = () => {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  const addRule = () => {
+    /*
+      Adds a rule to react state for repeated list rendering.
+    */
+    setRules(rules.concat({
+      id: uuid4(),
+      tokenContractAddr: inputERC721Addr
+    }));
+    setInputERC721Addr("");
   }
 
   const readLockCounter = async (rulesContract) => {
@@ -115,13 +135,22 @@ const App = () => {
 
         <input onChange={(event) => setCurrentURL(event.target.value)} type="text" />
         
-
+        {rules.length !== 0 && (
+          rules.map((rule) => (
+            <Rule
+              key={rule.id}
+              tokenContractAddr={rule.tokenContractAddr}
+            />
+          ))
+        )}
 
         {currentAccount && (<div className="bio">
           Enter an NFT (ERC-721) contract address:
         </div>)}
 
-        <input onChange={(event) => setTokenContractAddr(event.target.value)} type="text"/>
+        <input value={inputERC721Addr} onChange={(event) => setInputERC721Addr(event.target.value)} type="text"/>
+
+        <button className="waveButton" onClick={() => addRule()}>Add rule</button>
 
         {(<button className="waveButton" onClick={() => createLock()}>
           Create a new URL
@@ -132,7 +161,7 @@ const App = () => {
         ⛏ Working on it...
         </div>)}
 
-        {redirectURL && (<div className="bio">
+        {!txnMining && redirectURL && (<div className="bio">
           Here's your URL 🎉
           <br></br>
           <br></br>
