@@ -40,7 +40,7 @@ const Redirect = () => {
         const isValid = res[0];
         const redirectURL = res[1];
 
-        if (isValid) {
+        if (isValid && redirectURL !== "") {
             window.location.assign(redirectURL);
         } else {
             setStatus(INVALID);

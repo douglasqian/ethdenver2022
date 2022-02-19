@@ -28,9 +28,14 @@ node scripts/sample-script.js
 npx hardhat help
 ```
 
-## Backlog
-1. Allow adding multiple rules (already allowed by smart contract)
-2. Show existing NFTs in wallet as recommendations
-3. Extend support to ERC-20 and ERC-1155
-4. Use data from oracles like Chainlink
-5. ???
+## Features
+- Allow adding/removing multiple rules
+- Use data from oracles like Chainlink
+- Extend support to ERC-20 and ERC-1155
+- Managing locks (listing your locks, login)
+
+## Polish
+- Redirect UX (you need "X", list tokens we are checking for, unlock button)
+- Initial connection (button)
+- Recommend NFTs based on what's in your wallet
+- Handle multiple accounts in a wallet
