@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {checkIfWalletConnected, getConnectedAccount} from "./WalletUtils";
 import { ethers } from "ethers";
 import Rule from "./Rule";
+import { useSelector, useDispatch } from 'react-redux';
+import {add} from './ruleSlice';
 
 import "./App.css";
 import { v4 as uuid4 } from 'uuid';
@@ -26,11 +28,13 @@ const App = () => {
   const [testMode, setTestMode] = useState(false);
 
   const [currentAccount, setCurrentAccount] = useState("");
-  const [inputERC721Addr, setInputERC721Addr] = useState("0xC5922438b8873000C11ba9866c87deFFeD15623A");
+  const [inputERC721Addr, setInputERC721Addr] = useState("");
   const [currentURL, setCurrentURL] = useState("https://i.kym-cdn.com/photos/images/original/002/127/143/594.jpg");
   const [redirectURL, setRedirectURL] = useState("");
 
-  const [rules, setRules] = useState([]);
+  // Initializes "rules" state in Redux.
+  const rules = useSelector((state) => state.rules.value)
+  const dispatch = useDispatch()
 
   const createLock = async () => {
     /*
@@ -68,14 +72,11 @@ const App = () => {
     }
   }
 
-  const addRule = () => {
+  const addRuleInternal = () => {
     /*
       Adds a rule to react state for repeated list rendering.
     */
-    setRules(rules.concat({
-      id: uuid4(),
-      tokenContractAddr: inputERC721Addr
-    }));
+    dispatch(add({id: uuid4(), tokenContractAddr: inputERC721Addr}))
     setInputERC721Addr("");
   }
 
@@ -108,71 +109,72 @@ const App = () => {
   }, [])
 
   return (
-    <div className="mainContainer">
-      <div className="dataContainer">
+      <div className="mainContainer">
+        <div className="dataContainer">
 
-        {currentAccount && (<div className="header">
-        👋 Let's create a token-gated URL!
-        </div>)}
+          {currentAccount && (<div className="header">
+          👋 Let's create a token-gated URL!
+          </div>)}
 
-        {currentAccount && (<div className="header2">
-        A token-gated URL means that only certain wallets can access the destination URL.
-        <br></br>
-        Each rule defines an NFT to check for on the wallet.
-        <br></br>
-        We check to see if the connected wallet satisfies all the rules before redirecting to the destination URL.
-        </div>)}
-
-        {!currentAccount && (
-          <div className="header">
-            Wallet not connected!
-          </div>
-        )}
-
-        {currentAccount && (<div className="bio">
-          Destination URL:
-        </div>)}
-
-        <input onChange={(event) => setCurrentURL(event.target.value)} type="text" />
-        
-        {rules.length !== 0 && (
-          rules.map((rule) => (
-            <Rule
-              key={rule.id}
-              tokenContractAddr={rule.tokenContractAddr}
-            />
-          ))
-        )}
-
-        {currentAccount && (<div className="bio">
-          Enter an NFT (ERC-721) contract address:
-        </div>)}
-
-        <input value={inputERC721Addr} onChange={(event) => setInputERC721Addr(event.target.value)} type="text"/>
-
-        <button className="waveButton" onClick={() => addRule()}>Add rule</button>
-
-        {(<button className="waveButton" onClick={() => createLock()}>
-          Create a new URL
-        </button>)}
-
-        {txnMining && (<div className="bio">
+          {currentAccount && (<div className="header2">
+          A token-gated URL means that only certain wallets can access the destination URL.
           <br></br>
-        ⛏ Working on it...
-        </div>)}
+          Each rule defines an NFT to check for on the wallet.
+          <br></br>
+          We check to see if the connected wallet satisfies all the rules before redirecting to the destination URL.
+          </div>)}
 
-        {!txnMining && redirectURL && (<div className="bio">
-          Here's your URL 🎉
-          <br></br>
-          <br></br>
-          {redirectURL}
-          <br></br>
-          <br></br>
-          Share it with some friends!
-        </div>)}
+          {!currentAccount && (
+            <div className="header">
+              Wallet not connected!
+            </div>
+          )}
 
+          {currentAccount && (<div className="bio">
+            Destination URL:
+          </div>)}
+
+          <input onChange={(event) => setCurrentURL(event.target.value)} type="text" />
+          
+          {rules.length !== 0 && (
+            rules.map((rule) => (
+              <Rule
+                key={rule.id}
+                id={rule.id}
+                tokenContractAddr={rule.tokenContractAddr}
+              />
+            ))
+          )}
+
+          {currentAccount && (<div className="bio">
+            Enter an NFT (ERC-721) contract address:
+          </div>)}
+
+          <input value={inputERC721Addr} onChange={(event) => setInputERC721Addr(event.target.value)} type="text"/>
+
+          <button className="waveButton" onClick={() => addRuleInternal()}>Add rule</button>
+
+          {(<button className="waveButton" onClick={() => createLock()}>
+            Create a new URL
+          </button>)}
+
+          {txnMining && (<div className="bio">
+            <br></br>
+          ⛏ Working on it...
+          </div>)}
+
+          {!txnMining && redirectURL && (<div className="bio">
+            Here's your URL 🎉
+            <br></br>
+            <br></br>
+            {redirectURL}
+            <br></br>
+            <br></br>
+            Share it with some friends!
+          </div>)}
+
+        </div>
       </div>
-    </div>
   );
 }
 

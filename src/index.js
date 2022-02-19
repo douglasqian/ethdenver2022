@@ -6,17 +6,22 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Redirect from './redirect';
 
+import store from './app/store'
+import { Provider } from 'react-redux'
+
 const rootElement = document.getElementById('root');
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        {/* Homepage URL path */}
-        <Route exact path="/" element={<App />}/>
-        {/* Redirect URL path */}
-        <Route exact path="/*" element={<Redirect />}/>
-      </Routes>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          {/* Homepage URL path */}
+          <Route exact path="/" element={<App />}/>
+          {/* Redirect URL path */}
+          <Route exact path="/*" element={<Redirect />}/>
+          </Routes>
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>,
   rootElement,
 );
