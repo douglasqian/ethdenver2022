@@ -84,7 +84,7 @@ const Redirect = () => {
                     </main>
                 )}
 
-                {status == INVALID && (
+                {status === INVALID && (
                     <main style={{ padding: '1rem 0' }}>
                     <h2 className={styles.header}>Oops, looks like you don't have the required NFTs! </h2>
                     <br></br>
