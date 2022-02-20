@@ -109,6 +109,14 @@ const App = () => {
 
   }, [])
 
+  const rulesComponents = rules.map((rule) => (
+    <Rule
+      key={rule.id}
+      id={rule.id}
+      tokenContractAddr={rule.tokenContractAddr}
+    />
+  ))
+
   return (
       <div className={styles.mainContainer}>
         <div className={styles.dataContainer}>
@@ -118,44 +126,64 @@ const App = () => {
           <p>👋 Welcome to GATR <br /> Let's create a token-gated URL!</p>
           </div>)}
 
-          {currentAccount && (<div className={styles.header2}>
-            <p>A token-gated URL means that only certain wallets can access the destination URL.
-          <br></br>
-          Each rule defines an NFT to check for on the wallet.
-          <br></br>
-          We check to see if the connected wallet satisfies all the rules before redirecting to the destination URL.</p>
-          </div>)}
+          {currentAccount && (
+            <div className={styles.header2}>
+
+              <span className={styles.spanPadding}>Define set of rules that visiting wallet needs to satisfy in order to access URL.</span>
+
+              {/* <span className={styles.spanPadding}>1. Set destination URL that you want users to access</span>
+              <br />
+              <span className={styles.spanPadding}>2. Define set of rules (Ex. has NFT in wallet)</span>
+              <br />
+              <span className={styles.spanPadding}>Only wallets that satisfy every rule can access URL.</span> */}
+
+              {/* <p>Define set of rules that given wallet needs to pass. </p>
+              <p>Each rule defines an NFT to check for on the wallet.</p>
+              <p>Only wallets that satisfy every rule will allowed to access your destination URL.</p> */}
+            </div>)
+          }
 
           {!currentAccount && (
               <h1>Wallet not connected!</h1>
           )}
 
-          {currentAccount && (<div className={styles.bio}>
-            <p>Destination URL:</p>
-          </div>)}
+          <div className={styles.bio} style={{'background-color': 'rgba(0,0,0,.1)', 'margin': '10px 70px', 'border-radius':'10px'}}>
+          {/* <div className={styles.sectionBackdrop}> */}
+            {currentAccount && (
+              <div className={styles.bio}>
+                <h2 className={styles.noMargin}>1. Set Destination URL:</h2>
+              </div>
+            )}
 
-          <input onChange={(event) => setCurrentURL(event.target.value)} type="text" placeholder="Destination here" />
-          
-          {rules.length !== 0 && (
-            rules.map((rule) => (
-              <Rule
-                key={rule.id}
-                id={rule.id}
-                tokenContractAddr={rule.tokenContractAddr}
-              />
-            ))
+            <input style={{'margin': '10px 10px'}} onChange={(event) => setCurrentURL(event.target.value)} type="text" placeholder="Destination URL here" />
+          </div>
+
+          <div className={styles.bio} style={{'background-color': 'rgba(0,0,0,.1)', 'margin': '10px 70px', 'border-radius':'10px'}}>
+          {/* <div style={{'background-color': 'rgba(0,0,0,.1)', 'margin': '0px 70px'}} className={styles.bio}> */}
+          {currentAccount && (
+            <div className={styles.bio}>
+              <h2 className={styles.noMargin}>2. Define Gating Rules</h2>
+            </div>
           )}
 
+          {rules.length !== 0 && (
+            <div className={styles.bio}>
+            <h3>Added Rules</h3>
+            {rulesComponents}
+            </div>
+          )}
+ 
           {currentAccount && (<div className={styles.bio}>
-            <p>Enter an NFT (ERC-721) contract address:</p>
+            <p><strong>NFT (ERC-721) contract address:</strong></p>
           </div>)}
 
-          <input value={inputERC721Addr} onChange={(event) => setInputERC721Addr(event.target.value)} type="text" placeholder="Address here"/>
-
-          <button className={styles.waveButton} onClick={() => addRuleInternal()}>Add rule</button>
-
-          {(<button className={styles.waveButton} onClick={() => createLock()}>
-            Create a new URL
+          <input value={inputERC721Addr} onChange={(event) => setInputERC721Addr(event.target.value)} type="text" placeholder="Contract Address here"/>
+          <br />
+          <button className={styles.waveButton} style={{'margin': '10px 10px'}} onClick={() => addRuleInternal()}>Add rule</button>
+          </div>
+          <br />
+          {(<button style={{'width': '300px'}} className={styles.waveButton} onClick={() => createLock()}>
+            Generate Token-gated URL
           </button>)}
 
           {txnMining && (<div className={styles.bio}>

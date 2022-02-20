@@ -8,7 +8,7 @@ const Rule = ({id, tokenContractAddr}) => {
 
   return (
       <div className={styles.rules}>
-        Token contract address: {tokenContractAddr}
+        NFT contract address: {tokenContractAddr}
         <button onClick={() => dispatch(remove(id))}>X</button>
       </div>
     )

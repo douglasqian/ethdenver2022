@@ -71,9 +71,10 @@ const Redirect = () => {
                 {status == NOT_VALIDATED && (
                     <main style={{ padding: '1rem 0' }}>
                     <h2 className={styles.header}>👋 Welcome! This URL is token-gated.</h2>
-                    <p>We need to ensure you have the right NFTs to access this page.</p>
-                    <p>Please click button below to </p>
-                    <button className={styles.waveButton} onClick={() => unlockAccessClick()}>Unlock Access</button>
+                    <div className={styles.bio}>
+                        <p>We need to ensure you have the right NFTs to access this page.</p>
+                        <button className={styles.waveButton} onClick={() => unlockAccessClick()}>Check Access</button>
+                    </div>
                     </main>
                 )}
 

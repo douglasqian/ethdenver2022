@@ -23,6 +23,23 @@
             font-size: 20px;
             font-weight: 250;
             margin-bottom: 10px;
+            margin-top: -20px;
+        }
+
+        .spanPadding {
+            display: inline-block; /* change the display type           */
+            margin: 5px 0;        /* apply the needed vertical margins */
+        }
+
+        .noMargin {
+            margin: 0;
+        }
+
+        .sectionBackdrop {
+            background-color: 'rgba(0,0,0,.1)';
+            margin: '0px 70px';
+            // border: 'solid';
+            border-radius: '10px';
         }
         
         .bio {
@@ -47,6 +64,11 @@
             border: 0;
             border-radius: 5px;
             font-size:18px;
+            width: 150px;
+        }
+
+        .mediumButtonWidth {
+            width: 150px;
         }
 
         button{
