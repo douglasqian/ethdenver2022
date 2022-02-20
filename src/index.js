@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+// import { BrowserRouter, Routes, Route } from 'react-router-dom';
+// use HashRouter instead of BrowserRouter to make skynetlabs work: https://docs.skynetlabs.com/developer-guides/skynet-with-react
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -13,14 +15,19 @@ const rootElement = document.getElementById('root');
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
+      {/* use HashRouter instead of BrowserRouter to make skynetlabs work: https://docs.skynetlabs.com/developer-guides/skynet-with-react */}
+      {/* this requires all URL paths to be prefixed with /#/ which isn't ideal, but needed to make skynetlabs work*/}
+      {/* Ex. https://gatr.com/#/23 instead of https://gatr.com/23 */}
+      {/* <BrowserRouter> */}
+      <HashRouter>
         <Routes>
           {/* Homepage URL path */}
           <Route exact path="/" element={<App />}/>
           {/* Redirect URL path */}
           <Route exact path="/:lockID" element={<Redirect />}/>
           </Routes>
-      </BrowserRouter>
+      </HashRouter>
+      {/* </BrowserRouter> */}
     </Provider>
   </React.StrictMode>,
   rootElement,

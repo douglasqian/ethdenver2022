@@ -1,5 +1,8 @@
 # Gatr - A Token Gating Service Project for ETHDenver 2022 #BUIDLATHON
 
+[![Add to Homescreen](https://img.shields.io/badge/Skynet-Add%20To%20Homescreen-00c65e?logo=skynet&labelColor=0d0d0d)](https://homescreen.hns.siasky.net/#/skylink/_AG4E5JjtN24VckgM48iytC1yXdH8y98lGIb0gI9eDK3ww)
+
+
 ## Getting started
 
 1. Run `npm install` to install node modules and dependencies.

@@ -64,7 +64,7 @@ const App = () => {
       var lockID = await readLockCounter(rulesContract);
       lockID = lockID-1;
       const baseURL = window.location.hostname
-      const redirectURL = baseURL + "/" + lockID;
+      const redirectURL = baseURL + "/#/" + lockID;
       console.log("redirect URL: ", redirectURL);
       setRedirectURL(redirectURL);
 
@@ -121,7 +121,9 @@ const App = () => {
       <div className={styles.mainContainer}>
         <div className={styles.dataContainer}>
 
-          <img style={{width:'100px', marginRight:'auto', marginLeft:'auto'}} src="/gatr.svg" alt="" />
+          {/* <img style={{width:'100px', marginRight:'auto', marginLeft:'auto'}} src="/gatr.svg" alt="" /> */}
+          {/* uploaded logo via https://siasky.net/ to host via decentralized storage */}
+          <img style={{width:'100px', marginRight:'auto', marginLeft:'auto'}} src="https://siasky.net/AADA61qtENSXuCnfj6o55YY4uMOu9HOJqMctZ2Wkuy6gOw" alt="" />
           {currentAccount && (<div className={styles.header}>
           <p>👋 Welcome to GATR <br /> Let's create a token-gated URL!</p>
           </div>)}
