@@ -125,7 +125,7 @@ const App = () => {
           {currentAccount && (
             <div className={styles.header2}>
 
-              <span className={styles.spanPadding}>Define set of rules that visiting wallet needs to satisfy in order to access URL.</span>
+              <span className={styles.spanPadding}>Define set of rules that visiting wallet needs to satisfy in order to access URL. </span>
 
               {/* <span className={styles.spanPadding}>1. Set destination URL that you want users to access</span>
               <br />
