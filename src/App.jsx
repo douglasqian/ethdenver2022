@@ -125,7 +125,7 @@ const App = () => {
           {currentAccount && (
             <div className={styles.header2}>
 
-              <span className={styles.spanPadding}>Define set of rules that visiting wallet needs to satisfy in order to access URL. </span>
+              <span className={styles.spanPadding}>Define set of rules that visiting wallet needs to satisfy in order to access URL.</span>
 
               {/* <span className={styles.spanPadding}>1. Set destination URL that you want users to access</span>
               <br />
@@ -151,7 +151,7 @@ const App = () => {
               </div>
             )}
 
-            <input style={{'margin': '20px 10px'}} onChange={(event) => setCurrentURL(event.target.value)} type="text" placeholder="Destination URL here" />
+            <input style={{'margin': '20px 10px'}} onChange={(event) => setCurrentURL(event.target.value)} type="text" placeholder="Destination URL here..." />
           </div>
 
           <div className={styles.bio} style={{'background-color': 'rgba(0,0,0,.1)', 'margin': '10px 100px', 'border-radius':'10px'}}>
@@ -173,7 +173,7 @@ const App = () => {
             <p><strong>NFT (ERC-721) contract address:</strong></p>
           </div>)}
 
-          <input value={inputERC721Addr} onChange={(event) => setInputERC721Addr(event.target.value)} type="text" placeholder="Contract Address here"/>
+          <input value={inputERC721Addr} onChange={(event) => setInputERC721Addr(event.target.value)} type="text" placeholder="Contract Address here..."/>
           <br />
           <button className={styles.waveButton} style={{'margin': '20px 10px'}} onClick={() => addRuleInternal()}>Add rule</button>
           </div>
