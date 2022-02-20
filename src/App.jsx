@@ -147,7 +147,7 @@ const App = () => {
               <h1>Wallet not connected!</h1>
           )}
 
-          <div className={styles.bio} style={{'background-color': 'rgba(0,0,0,.1)', 'margin': '10px 70px', 'border-radius':'10px'}}>
+          <div className={styles.bio} style={{'background-color': 'rgba(0,0,0,.1)', 'margin': '10px 100px', 'border-radius':'10px'}}>
           {/* <div className={styles.sectionBackdrop}> */}
             {currentAccount && (
               <div className={styles.bio}>
@@ -155,11 +155,11 @@ const App = () => {
               </div>
             )}
 
-            <input style={{'margin': '10px 10px'}} onChange={(event) => setCurrentURL(event.target.value)} type="text" placeholder="Destination URL here" />
+            <input style={{'margin': '20px 10px'}} onChange={(event) => setCurrentURL(event.target.value)} type="text" placeholder="Destination URL here" />
           </div>
 
-          <div className={styles.bio} style={{'background-color': 'rgba(0,0,0,.1)', 'margin': '10px 70px', 'border-radius':'10px'}}>
-          {/* <div style={{'background-color': 'rgba(0,0,0,.1)', 'margin': '0px 70px'}} className={styles.bio}> */}
+          <div className={styles.bio} style={{'background-color': 'rgba(0,0,0,.1)', 'margin': '10px 100px', 'border-radius':'10px'}}>
+          {/* <div style={{'background-color': 'rgba(0,0,0,.1)', 'margin': '0px 100px'}} className={styles.bio}> */}
           {currentAccount && (
             <div className={styles.bio}>
               <h2 className={styles.noMargin}>2. Define Gating Rules</h2>
@@ -179,7 +179,7 @@ const App = () => {
 
           <input value={inputERC721Addr} onChange={(event) => setInputERC721Addr(event.target.value)} type="text" placeholder="Contract Address here"/>
           <br />
-          <button className={styles.waveButton} style={{'margin': '10px 10px'}} onClick={() => addRuleInternal()}>Add rule</button>
+          <button className={styles.waveButton} style={{'margin': '20px 10px'}} onClick={() => addRuleInternal()}>Add rule</button>
           </div>
           <br />
           {(<button style={{'width': '300px'}} className={styles.waveButton} onClick={() => createLock()}>
