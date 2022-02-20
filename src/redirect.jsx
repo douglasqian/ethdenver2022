@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import {useParams} from "react-router-dom";
 import {checkIfWalletConnected, getConnectedAccount} from "./WalletUtils";
 import { ethers } from "ethers";
 import {rulesContractAddr} from "./App";
@@ -12,6 +13,8 @@ const CHECKING_VALID = 2;
 const INVALID = 3;
 
 const Redirect = () => {
+    let { lockID } = useParams();
+    console.log("lockID from URL: ", lockID);
 
     const { ethereum } = window;
     const [status, setStatus] = useState(NOT_VALIDATED);
@@ -27,14 +30,11 @@ const Redirect = () => {
         const signer = provider.getSigner();
         const rulesContract = new ethers.Contract(rulesContractAddr, RULES_ABI.abi, signer);
 
-        // drop the first character ("/")
-        const lockIDFromURL = Number(window.location.pathname.substring(1));
-
         // Call "isValid" function, smart contract will verify wallet
         // address against stored rules on lock
         console.log("wallet address: ", account);
-        console.log("lock ID: ", lockIDFromURL);
-        const res = await rulesContract.isValid(account, lockIDFromURL);
+        console.log("lock ID: ", lockID);
+        const res = await rulesContract.isValid(account, lockID);
         console.log("res: ", res);
         console.log("is valid: ", res[0]);
         console.log("redirect URL: ", res[1]);

@@ -18,7 +18,7 @@ ReactDOM.render(
           {/* Homepage URL path */}
           <Route exact path="/" element={<App />}/>
           {/* Redirect URL path */}
-          <Route exact path="/*" element={<Redirect />}/>
+          <Route exact path="/:lockID" element={<Redirect />}/>
           </Routes>
       </BrowserRouter>
     </Provider>
