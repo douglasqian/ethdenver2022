@@ -13,7 +13,6 @@ import ERC20_ABI from "./abi/erc20.json";
 import ERC721_ABI from "./abi/erc721.json";
 import ERC1155_ABI from "./abi/erc1155.json";
 
-const baseURL = "localhost:3000"
 // const tokenContractAddr = "0xC5922438b8873000C11ba9866c87deFFeD15623A";
 
 // const otherTokenContractAddr = "0xf44bb00d6bB3776df40831369c05b7368A9c916a"; // Doug wallet doesn't have NFT here
@@ -64,6 +63,7 @@ const App = () => {
 
       var lockID = await readLockCounter(rulesContract);
       lockID = lockID-1;
+      const baseURL = window.location.hostname
       const redirectURL = baseURL + "/" + lockID;
       console.log("redirect URL: ", redirectURL);
       setRedirectURL(redirectURL);
