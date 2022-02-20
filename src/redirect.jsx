@@ -42,7 +42,7 @@ const Redirect = () => {
         const isValid = res[0];
         const redirectURL = res[1];
 
-        if (status == CHECKING_VALID) {
+        if (status === CHECKING_VALID) {
             if (isValid && redirectURL !== "") {
                 window.location.assign(redirectURL);
             } else {
@@ -68,7 +68,7 @@ const Redirect = () => {
     return (
         <div className={styles.mainContainer}>
             <div className={styles.dataContainer}>
-                {status == NOT_VALIDATED && (
+                {status === NOT_VALIDATED && (
                     <main style={{ padding: '1rem 0' }}>
                     <h2 className={styles.header}>👋 Welcome! This URL is token-gated.</h2>
                     <div className={styles.bio}>
@@ -78,7 +78,7 @@ const Redirect = () => {
                     </main>
                 )}
 
-                {status == PENDING_VALID && (
+                {status === PENDING_VALID && (
                     <main style={{ padding: '1rem 0' }}>
                     <h2 className={styles.header}>Checking if you have access...</h2>
                     </main>

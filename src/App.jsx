@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { v4 as uuid4 } from 'uuid';
 import { ethers } from "ethers";
@@ -8,10 +8,6 @@ import {add} from './ruleSlice';
 import Rule from "./Rule";
 import "./App.css";
 import styles from './styles/Master.module.scss'
-
-import ERC20_ABI from "./abi/erc20.json";
-import ERC721_ABI from "./abi/erc721.json";
-import ERC1155_ABI from "./abi/erc1155.json";
 
 // const tokenContractAddr = "0xC5922438b8873000C11ba9866c87deFFeD15623A";
 
@@ -25,7 +21,6 @@ const App = () => {
   const { ethereum } = window;
 
   const [txnMining, setTxnMining] = useState(false);
-  const [testMode, setTestMode] = useState(false);
 
   const [currentAccount, setCurrentAccount] = useState("");
   const [inputERC721Addr, setInputERC721Addr] = useState("");
@@ -91,17 +86,16 @@ const App = () => {
     return lockID.toNumber();
   }
 
-
-  const connectWalletWrapper = async () => {
-    /* 
-      Wrapper for connecting the wallet and setting the current wallet address.
-    */
-    await checkIfWalletConnected(ethereum);
-    const account = await getConnectedAccount(ethereum);
-    setCurrentAccount(account);
-  }
-
   useEffect(() => {
+    const connectWalletWrapper = async () => {
+      /* 
+        Wrapper for connecting the wallet and setting the current wallet address.
+      */
+      await checkIfWalletConnected(ethereum);
+      const account = await getConnectedAccount(ethereum);
+      setCurrentAccount(account);
+    }
+
     /* 
       This runs our function when the page loads.
     */
